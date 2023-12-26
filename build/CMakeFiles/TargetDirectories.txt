@@ -1,0 +1,4 @@
+/home/alex/OS_5_7/build/CMakeFiles/client.dir
+/home/alex/OS_5_7/build/CMakeFiles/server.dir
+/home/alex/OS_5_7/build/CMakeFiles/edit_cache.dir
+/home/alex/OS_5_7/build/CMakeFiles/rebuild_cache.dir

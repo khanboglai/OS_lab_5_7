@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/client.dir/src/client_program.cpp.o -o client  -Wl,-rpath,/usr/local/lib /usr/local/lib/libzmq.so.5.2.6 -lbsd -lrt 

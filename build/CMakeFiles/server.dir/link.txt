@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/server.dir/src/server_program.cpp.o -o server  -Wl,-rpath,/usr/local/lib /usr/local/lib/libzmq.so.5.2.6 -lbsd -lrt 
