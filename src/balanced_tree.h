@@ -11,7 +11,7 @@ class BalancedTree {
                 int id;
                 BalancedTreeNode* left;
                 BalancedTreeNode* right;
-                int height;
+                int height; // высота поддеревьев
                 bool available; // flag, доступность узла
 
                 BalancedTreeNode(int id) {
@@ -119,7 +119,7 @@ class BalancedTree {
                     } else if (left_height == -1) {
                         return right_height + 1;
                     } else {
-                        return std::min(left_height, right_height) + 1;
+                        return std::min(left_height, right_height) + 1; // балансировка
                     }
                 }
 
