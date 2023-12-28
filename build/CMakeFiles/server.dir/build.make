@@ -73,15 +73,15 @@ CMakeFiles/server.dir/src/server_program.cpp.o: CMakeFiles/server.dir/flags.make
 CMakeFiles/server.dir/src/server_program.cpp.o: ../src/server_program.cpp
 CMakeFiles/server.dir/src/server_program.cpp.o: CMakeFiles/server.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/OS_5_7/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/server.dir/src/server_program.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/src/server_program.cpp.o -MF CMakeFiles/server.dir/src/server_program.cpp.o.d -o CMakeFiles/server.dir/src/server_program.cpp.o -c /home/alex/OS_5_7/src/server_program.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/server.dir/src/server_program.cpp.o -MF CMakeFiles/server.dir/src/server_program.cpp.o.d -o CMakeFiles/server.dir/src/server_program.cpp.o -c /home/alex/OS_5_7/src/server_program.cpp
 
 CMakeFiles/server.dir/src/server_program.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/server.dir/src/server_program.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/OS_5_7/src/server_program.cpp > CMakeFiles/server.dir/src/server_program.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/OS_5_7/src/server_program.cpp > CMakeFiles/server.dir/src/server_program.cpp.i
 
 CMakeFiles/server.dir/src/server_program.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/server.dir/src/server_program.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/OS_5_7/src/server_program.cpp -o CMakeFiles/server.dir/src/server_program.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/OS_5_7/src/server_program.cpp -o CMakeFiles/server.dir/src/server_program.cpp.s
 
 # Object files for target server
 server_OBJECTS = \

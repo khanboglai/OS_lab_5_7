@@ -6,11 +6,12 @@
 
 class CalculationNode {
     private:
-        zmq::context_t context;
+        zmq::context_t context; // основной компонет для создания сокетов и связь между ними
     public:
-        zmq::socket_t left, right, parent;
-        int id, left_id = -2, right_id = -2, parent_id;
-        int left_port, right_port, parent_port;
+        zmq::socket_t left, right, parent; // сокеты
+
+        int id, left_id = -2, right_id = -2, parent_id; // идентификаторы для нод
+        int left_port, right_port, parent_port; // порты для нод
 
         CalculationNode(int id, int parent_port, int parent_id): 
             id(id), 
@@ -18,8 +19,8 @@ class CalculationNode {
             parent_id(parent_id), 
             left(context, ZMQ_REQ),
             right(context, ZMQ_REQ), 
-            parent(context, ZMQ_REP)
-            {
+            parent(context, ZMQ_REP) {
+
             if (id != -1) {
                 connect(parent, parent_port);
             }
@@ -33,45 +34,48 @@ class CalculationNode {
                 left_id = child_id;
                 port = left_port;
                 isleft = true;
-            }
-            else if (right_id == -2) {
+
+            } else if (right_id == -2) {
                 right_port = bind(right, child_id);
                 right_id = child_id;
                 port = right_port;
+
+            } else {
+                return "Error: can not create the calculation node";
             }
-            else {
-                std::string fail = "Error: can not create the calculation node";
-                return fail;
-            }
+
+
             int fork_id = fork();
-            if (fork_id == 0) {
+
+            if (fork_id == 0) { // child process
                 if (execl("./server", "server", std::to_string(child_id).c_str(), std::to_string(port).c_str(), std::to_string(id).c_str(), (char*)NULL) == -1) {
                     std::cout << "Error: can not run the execl-command" << std::endl;
                     exit(EXIT_FAILURE);
                 }
-            }
-            else {
+
+            } else {
                 std::string child_pid;
                 try {
                     if (isleft) {
                         int time = 3000;
-                        left.setsockopt(ZMQ_SNDTIMEO, time);
+                        left.set(zmq::sockopt::sndtimeo, time);
                         send_message(left, "pid");
                         child_pid = receive_message(left);
-                    }
-                    else {
+
+                    } else {
                         int time = 3000;
-                        right.setsockopt(ZMQ_SNDTIMEO, time);
+                        right.set(zmq::sockopt::sndtimeo, time);
                         send_message(right, "pid");
                         child_pid = receive_message(right);
                     }
                     return "Ok: " + child_pid;
                 }
+
                 catch (int) {
-                    std::string fail = "Error: can not connect to the child";
-                    return fail;
+                    return "Error: can not connect to the child";
                 }
             }
+            return "";
         }
 
         std::string ping(int id) {
@@ -79,8 +83,8 @@ class CalculationNode {
             if (this->id == id) {
                 answer = "Ok: 1";
                 return answer;
-            }
-            else if (left_id == id) {
+
+            } else if (left_id == id) {
                 std::string message = "ping " + std::to_string(id);
                 send_message(left, message);
                 try {
@@ -90,8 +94,8 @@ class CalculationNode {
                     }
                 }
                 catch(int){}
-            }
-            else if (right_id == id) {
+
+            } else if (right_id == id) {
                 std::string message = "ping " + std::to_string(id);
                 send_message(right, message);
                 try {
@@ -105,12 +109,12 @@ class CalculationNode {
             return answer;
         }
 
-        std::string sendstring (std::string string, int id) {
+        std::string sendstring(std::string string, int id) {
             std::string answer = "Error: Parent not found";
             if (left_id == -2 && right_id == -2) {
                 return answer;
-            }
-            else if (left_id == id) {
+
+            } else if (left_id == id) {
                 if (ping(left_id) == "Ok: 1") {
                     send_message(left, string);
                     try{
@@ -118,8 +122,7 @@ class CalculationNode {
                     }
                     catch(int){}
                 }
-            }
-            else if (right_id == id) {
+            } else if (right_id == id) {
                 if (ping(right_id) == "Ok: 1") {
                     send_message(right, string);
                     try {
@@ -127,8 +130,7 @@ class CalculationNode {
                     }
                     catch(int){}
                 }
-            }
-            else {
+            } else {
                 if (ping(left_id) == "Ok: 1") {
                     std::string message = "send " + std::to_string(id) + " " + string;
                     send_message(left, message);
@@ -142,6 +144,7 @@ class CalculationNode {
                         answer = message;
                     }
                 }
+
                 if (ping(right_id) == "Ok: 1") {
                     std::string message = "send " + std::to_string(id) + " " + string;
                     send_message(right, message);
@@ -159,9 +162,10 @@ class CalculationNode {
             return answer;
         }
 
-        std::string exec (std::string string, std::string pattern) {
+        // поиск подстроки в строке, наивный алгоритм
+        std::string exec(std::string string, std::string pattern) {
             std::string result = "";
-            int m = pattern.size(), n = string.size() - m;
+            int m = pattern.size(), n = string.size(); // тут баг пофиксил
             for (int i = 0; i < n; ++i) {
                 bool flag = true;
                 for (int j = 0; j < m; ++j) {
@@ -170,10 +174,13 @@ class CalculationNode {
                         break;
                     }
                 }
+
+                // суммирование результата по флагу
                 if (flag) {
-                    result += (std::to_string(i + 1) + " ");
+                    result += (std::to_string(i) + "; ");
                 }
             }
+
             std::string answer = "Ok: " + std::to_string(id) + ": " + result;
             return answer;
         }
@@ -190,7 +197,7 @@ class CalculationNode {
             return "Ok";
         }
 
-        std::string kill () { 
+        std::string kill() { 
             if (left_id != -2){
                 if (ping(left_id) == "Ok: 1") {
                     std::string message = "kill";
@@ -198,11 +205,13 @@ class CalculationNode {
                     try {
                         message = receive_message(left);
                     }
+
                     catch(int){}
                     unbind(left, left_port);
                     left.close();
                 }
             }
+
             if (right_id != -2) {
                 if (ping(right_id) == "Ok: 1") {
                     std::string message = "kill";
@@ -218,5 +227,5 @@ class CalculationNode {
             return std::to_string(parent_id);
         }
         
-        ~CalculationNode() {}
+        ~CalculationNode() = default;
 };

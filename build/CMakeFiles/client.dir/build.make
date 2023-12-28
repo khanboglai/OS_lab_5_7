@@ -73,15 +73,15 @@ CMakeFiles/client.dir/src/client_program.cpp.o: CMakeFiles/client.dir/flags.make
 CMakeFiles/client.dir/src/client_program.cpp.o: ../src/client_program.cpp
 CMakeFiles/client.dir/src/client_program.cpp.o: CMakeFiles/client.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/OS_5_7/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/client.dir/src/client_program.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/client.dir/src/client_program.cpp.o -MF CMakeFiles/client.dir/src/client_program.cpp.o.d -o CMakeFiles/client.dir/src/client_program.cpp.o -c /home/alex/OS_5_7/src/client_program.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/client.dir/src/client_program.cpp.o -MF CMakeFiles/client.dir/src/client_program.cpp.o.d -o CMakeFiles/client.dir/src/client_program.cpp.o -c /home/alex/OS_5_7/src/client_program.cpp
 
 CMakeFiles/client.dir/src/client_program.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/client.dir/src/client_program.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/OS_5_7/src/client_program.cpp > CMakeFiles/client.dir/src/client_program.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/OS_5_7/src/client_program.cpp > CMakeFiles/client.dir/src/client_program.cpp.i
 
 CMakeFiles/client.dir/src/client_program.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/client.dir/src/client_program.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/OS_5_7/src/client_program.cpp -o CMakeFiles/client.dir/src/client_program.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/OS_5_7/src/client_program.cpp -o CMakeFiles/client.dir/src/client_program.cpp.s
 
 # Object files for target client
 client_OBJECTS = \

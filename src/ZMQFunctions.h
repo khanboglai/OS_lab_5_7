@@ -1,19 +1,24 @@
 #pragma once
 #include <bits/stdc++.h>
 #include <zmq.hpp>
+
+
 const int MAIN_PORT = 4040;
 
 void send_message(zmq::socket_t &socket, const std::string &msg) {
     zmq::message_t message(msg.size());
     memcpy(message.data(), msg.c_str(), msg.size());
-    socket.send(message);
+    socket.send(message, zmq::send_flags::none);
 }
 
-std::string receive_message(zmq::socket_t &socket) {
+std::string receive_message(zmq::socket_t &socket) { // получить сообщение
     zmq::message_t message;
+    zmq::recv_flags flags = zmq::recv_flags::none;
+
     int chars_read;
     try {
-        chars_read = (int)socket.recv(&message);
+        (void)socket.recv(message, zmq::recv_flags::none);
+        chars_read = message.size();
     }
     catch (...) {
         chars_read = 0;
@@ -35,11 +40,10 @@ void disconnect(zmq::socket_t &socket, int port) {
     socket.disconnect(address);
 }
 
-int bind(zmq::socket_t &socket, int id) {
+int bind(zmq::socket_t &socket, int id) { // привязать
     int port = MAIN_PORT + id;
     std::string address = "tcp://127.0.0.1:" + std::to_string(port);
-    // int time = 3000;
-    // socket.setsockopt(ZMQ_RCVTIMEO, &time);
+    
     while(1){
         try{
             socket.bind(address);
@@ -52,7 +56,7 @@ int bind(zmq::socket_t &socket, int id) {
     return port;
 }
 
-void unbind(zmq::socket_t &socket, int port) {
+void unbind(zmq::socket_t &socket, int port) { // отвязать
     std::string address = "tcp://127.0.0.1:" + std::to_string(port);
     socket.unbind(address);
 }
